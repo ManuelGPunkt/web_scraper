@@ -10,26 +10,11 @@ class Behavior
 
     init(e)
     {
+        /**
         let sForm = document.getElementsByName('sForm')[0];
         let url = document.getElementsByName('url')[0];
         let pwd = document.getElementsByName('pwdCheck')[0];
-
-        sForm.addEventListener('submit',(e) =>
-        {
-            /**es soll ein textfeld angehaengt werden, in dem ein passwort abgefragt wird.
-             * das Verhalten ist in checkPWD implementiert.
-             * */
-            checkInput(url)
-        });
-
-        checkInput(url)
-        {
-            if(url.value != "" && !(url.value.includes("'") || url.value.includes("\"")) && checkPWD(pwd))
-            {
-                this.connect(url)
-                //es fehlt noch das Verarbeiten der Nachricht des Servers.
-            }
-        }
+        */
 
         checkPWD(pwd)
         {
@@ -37,12 +22,20 @@ class Behavior
                 es soll ein passwort eingeben werden und anschliessend ueberprueft werden.
                 wenn es korrekt ist, soll zugelassen werden, dass das Programm die Website der gegebenen URL scraped.
             */
-           if(sha256(pwd) == "hash des passworts")
+           if(sha256(pwd.value) == "f395c41bd385de8883ffbe089efa60d9fa809ef626135a9dd848bf5b10d5b793")
            {
             this.connect(url.value);
             return true; //wenn das Passwort stimmt, wird die Nachricht an den Server geschickt, ansonsten nicht.
            }
            false;
+        }
+
+        checkInput(url) //es muss fuer diese funktion der Wert uebergeben werden
+        {
+            if(url != "" && !(url.includes("'") || url.includes("\"")) && checkPWD(pwd))
+            {
+                checkPWD(pwd)
+            }
         }
 
     }
