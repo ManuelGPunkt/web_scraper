@@ -1,8 +1,9 @@
 import asyncio  #asyncio ist eine Bibliothek zum Ausfuehren asynchroner Aufgaben
 import websockets
+from database_connection import DBconnect
 #from http.server import BaseHTTPRequestHandler, HTTPServer
 
-class Connect:
+class Activate(DBconnect):
     '''
     diese Klasse soll die Netzwerkfaehigkeit des Server Programmes bieten
     '''
@@ -12,20 +13,20 @@ class Connect:
         self.port: int = port
         self.websocket = websockets.websocket
         self.path = websockets.__path__
+        #self.mkQuery = DBconnect()
 
-        async def _server(websocket, path) -> any:
-            while True:
-                message = await websocket.recv()    #hier sollte die sql anfrage empfangen werden
-                print (f"received request: {message}")
-                await websocket.send("server received: " + message)
-                return message
+        async def server(websocket, path) -> any:
+            try:
+                async for message in websocket:
+                    print(f"incomming message: {message}")
+                    #self.mkQuery(message) hier soll die URL und die Parameter an den Datenbank Klasse gesendet werden
 
-        server_start = websockets.serve(_server, address, port)
+            except websockets.exceptions.ConnectionClosedError:
+                print("Verbindung wurde geschlossen!")
 
-        return _server(websockets.websocket, websockets.path)
+        start_server = websockets.serve(server, address, port)
+        print("python server is running at {} on port {}".format(address, port))
+        asyncio.get_event_loop().run_until_complete(server_start)
+        asyncio.get_event_loop().run_forever()
 
-        # print("python server is running at {} on port {}".format(address, port))
-        # asyncio.get_event_loop().run_until_complete(server_start)
-        # asyncio.get_event_loop().run_forever()
-
-print(Connect("localhost", 49153))
+#print(Connect("localhost", 49153))
