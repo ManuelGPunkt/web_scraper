@@ -26,7 +26,7 @@ class Activate(DBconnect):
 
         start_server = websockets.serve(server, address, port)
         print("python server is running at {} on port {}".format(address, port))
-        asyncio.get_event_loop().run_until_complete(server_start)
+        asyncio.get_event_loop().run_until_complete(start_server)
         asyncio.get_event_loop().run_forever()
 
 #print(Connect("localhost", 49153))
