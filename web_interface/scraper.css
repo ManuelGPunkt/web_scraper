@@ -3,3 +3,7 @@ body
     position: relative;
     text-align: center;
 }
+
+.error {
+    border: 2px solid red; /* Dicke, Stil und Farbe des Rahmens einstellen */
+}
