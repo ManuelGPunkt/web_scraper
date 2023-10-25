@@ -36,7 +36,7 @@ class Behavior
     {
         const PARAM = this.param.value;
 
-        if(PARAM == "" || (PARAM.includes("'") || PARAM.includes("\""))) //ueberpruefen ob der String ungueltige Zeichen enthaelt, ', " (SQL Injection) oder leer ist.
+        if((PARAM.includes("'") || PARAM.includes("\""))) //ueberpruefen ob der String ungueltige Zeichen enthaelt, ', " (SQL Injection) oder leer ist.
         {
             return false;
         }
@@ -59,15 +59,8 @@ class CreateConnection  //Diese Klasse stellt eine Verbindung zum python Web scr
         {
             console.log("connection established");
 
-            if(msg1)
-            {
-                this.socket.send(msg1);    //hier muss die anzugebende URL als parameter drin stehen.
-            }
-            
-            if(msg2)
-            {
-                this.socket.send(msg2); //hier werden die Parameter als String an den Scraper geschickt.
-            }
+            this.socket.send(msg1); //in msg1 soll die URL stehen
+            this.socket.send(msg2); //in msg2 sollen der Parameter string stehen. Wenn dieser leer ist, wird er vom scraper ignoriert (nicht verarbeitet)
         };
 
         this.socket.onerror = () =>
