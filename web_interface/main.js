@@ -15,15 +15,7 @@ document.addEventListener('DOMContentLoaded', function init(e) {
         
         if(inputCheck.checkPWD() && inputCheck.checkURL())
         {
-            if(inputCheck.checkParameters()) //wenn die parameter gesetzt und gueltig sind
-            {
-                const connect = new CreateConnection(URL, param);   //es wird die URL und parameter als argument uebergeben
-            }
-
-            else    //wenn die parameter nicht gesetzt oder ungueltig sind
-            {
-                const connect = new CreateConnection(URL); //es wird die URL als argument uebergeben
-            }
+            const connect = new CreateConnection(URL, param);   //es wird die URL und parameter als argument uebergeben
         }
 
         else    //wenn die Bedingungen fuer das Formular nicht erfuellt sind.
@@ -33,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function init(e) {
             Array.from(elements).forEach((element) => { //alle Eingabefelder werden der Klasse error zugeordnet und rot gefaerbt.
                 element.classList.add("error");
             });
-
 
             return false;   //das Formular wird nicht abgeschickt.
         }
