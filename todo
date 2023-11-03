@@ -1,5 +1,0 @@
-the message which should be send to the server will be one message.
-the first word in the message will be the URL and everything afterwards are the arguments (name of HTML attributes).
-the message is then taken appart for the correct SQL-request in the database class.
-Example:
-  https://de.wikipedia.org/wiki/Eumel a p form
