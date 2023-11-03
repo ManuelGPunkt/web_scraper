@@ -54,34 +54,37 @@ class CreateConnection  //Diese Klasse stellt eine Verbindung zum python Web scr
     {
         this.url = document.getElementsByName('url')[0];
         this.socket = new WebSocket("ws://localhost:49153");
+        this.msg1 = msg1;
+        this.msg2 = msg2;
 
-        this.socket.onopen = () => //mit dieser funktion koennen die Nachricht an den Scraper gesendet werden.
+        //Methoden an Ereignisse binden
+        this.socket.onmessage = this.handleMessage.bind(this);
+    }
+
+    closeConnection()
+    {
+        console.log("connection closed");
+    }
+
+    connect()
+    {
+        try
         {
-            console.log("connection established");
-
             this.socket.send(msg1); //in msg1 soll die URL stehen
             this.socket.send(msg2); //in msg2 sollen der Parameter string stehen. Wenn dieser leer ist, wird er vom scraper ignoriert (nicht verarbeitet)
-        };
-
-        this.socket.onerror = () =>
+        }
+        
+        catch(error)
         {
-            //alert("connection to server could not be astablished!");
             console.log("Server unreachable");
-        };
+            this.closeConnection();
+        }
+    };
 
-        this.socket.onmessage = (event) =>
-        {
-            console.log("received data: ", event.data);   //hier muss als Antwort die gelieferten Daten stehen.
-            alert("eine Nachricht ist eingegangen");
+    handleMessage(event)
+    {
+        console.log("incomming message");
 
-            //Die Daten sollen auf der Website angezeigt werden und nicht in der Konsole stehen.
-            document.getElementsByTagName('span')[0].innerHTML = event.data;
-        };
-
-        this.socket.onclose = () =>
-        {
-            //alert("Die Verbindung wurde getrennt");
-            console.log("connection closed");
-        };
+        //es muss noch eine methode zur Formatierung der Nachricht implementiert werden
     }
 }
