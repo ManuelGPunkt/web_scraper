@@ -61,8 +61,9 @@ class CreateConnection  //Diese Klasse stellt eine Verbindung zum python Web scr
         this.socket.onmessage = this.handleMessage.bind(this);
     }
 
-    closeConnection()
+    closeConnection()   //dient lediglich um die Verbindung zu schliessen
     {
+        this.socket.close();
         console.log("connection closed");
     }
 
