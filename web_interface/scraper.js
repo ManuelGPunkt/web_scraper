@@ -19,7 +19,7 @@ class Behavior
 
         let PWD = this.pwd.value
         
-        const hashedPW = CryptoJS.SHA256(pwd.value).toString();
+        const hashedPW = CryptoJS.SHA256(PWD).toString();
         return hashedPW === "f395c41bd385de8883ffbe089efa60d9fa809ef626135a9dd848bf5b10d5b793"; // gibt true oder false zurueck. Das Passwort ist: 8h+H)=(+n-Y%DG78
     }
 
