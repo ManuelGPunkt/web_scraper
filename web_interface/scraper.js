@@ -12,17 +12,24 @@ class Behavior
 
     async checkPWD()
     {
-        let PWD = this.pwd.value;
-            /**
-                es soll ein passwort eingeben werden und anschliessend ueberprueft werden.
-                wenn es korrekt ist, soll zugelassen werden, dass das Programm die Website der gegebenen URL scraped.
-            */
+        /**
+         *es soll ein passwort eingeben werden und anschliessend ueberprueft werden.
+         *wenn es korrekt ist, soll zugelassen werden, dass das Programm die Website der gegebenen URL scraped.
+         */
+
+        let PWD = this.pwd.value
+        
         const hashedPW = CryptoJS.SHA256(pwd.value).toString();
         return hashedPW === "f395c41bd385de8883ffbe089efa60d9fa809ef626135a9dd848bf5b10d5b793"; // gibt true oder false zurueck. Das Passwort ist: 8h+H)=(+n-Y%DG78
     }
 
     async checkURL() //es wird die gueltigkeit der URL ueberprueft
     {
+        /**
+         * Es wird ueberprueft ob der String ungueltige Zeichen enthaelt, wenn der Fall ist, wird false zurueckgegeben,
+         * dadurch wird der komplette Programmablauf angehalten.
+         * Wenn die Eingabe gueltig ist, true.
+         */
         const URL = this.url.value;
 
         if(URL == "" || (URL.includes("'") || URL.includes("\"")))
@@ -30,10 +37,17 @@ class Behavior
             alert("URL invalid!");
             return false; //der gesammte Ablauf des Programms wird unterbrochen
         }
+        
+        return true;
     }
 
     async checkParameters() //wenn die Parameter gueltig sind, werden sie als einziger string an den web scraper geschickt und dort zerteilt.
     {
+        /**
+         * Es wird ueberprueft ob ungueltige Zeichen vorhanden sind, wenn ja wird false zurueckgeliefert.
+         * Wenn die Parameter gueltig sind, liefert die Methode die Eingabe als einen einzigen String zurueck.
+         */
+
         const PARAM = this.param.value;
 
         if((PARAM.includes("'") || PARAM.includes("\""))) //ueberpruefen ob der String ungueltige Zeichen enthaelt, ', " (SQL Injection) oder leer ist.
@@ -48,8 +62,15 @@ class Behavior
     }
 }
 
-class CreateConnection  //Diese Klasse stellt eine Verbindung zum python Web scraper her, dieser ist mit der Datenbank verbunden.
+class CreateConnection
 {
+    /**
+     * 
+     * @param {*} msg1 
+     * @param {*} msg2 
+     * 
+     * Diese Klasse stellt eine Verbindung zum python Web scraper her, dieser ist mit der Datenbank verbunden.
+     */
     constructor(msg1, msg2)
     {
         this.url = document.getElementsByName('url')[0];
@@ -61,14 +82,27 @@ class CreateConnection  //Diese Klasse stellt eine Verbindung zum python Web scr
         this.socket.onmessage = this.handleMessage.bind(this);
     }
 
-    closeConnection()   //dient lediglich um die Verbindung zu schliessen
+    closeConnection()
     {
+        /**
+         *Diese Funktion dient lediglich um die Verbindung zu schliessen.
+         */
+
         this.socket.close();
         console.log("connection closed");
+        
+        return true;    //return true damit nachdem die Verbindung geschlossen wurde, dass Programm komplett beendet wird.
     }
 
-    connect()
+    sendMessage()
     {
+        /**
+         * Es wird in einem try-catch block versucht, zwei Nachrichten zu schicken.
+         * Die erste Nachricht msg1 soll die URL der zu-scrapenden Nachricht enthalten.
+         * Die zweite Nachricht msg2 soll die, durch leerzeichen getrennten, Elementnamen enthalten ausgegeben werden sollen.
+         * Falls die uebertragung fehlschlaegt, soll die Verbindung abgebrochen werden.
+         */
+
         try
         {
             this.socket.send(msg1); //in msg1 soll die URL stehen
@@ -77,15 +111,31 @@ class CreateConnection  //Diese Klasse stellt eine Verbindung zum python Web scr
         
         catch(error)
         {
-            console.log("Server unreachable");
+            console.log("Server unreachable", error);
             this.closeConnection();
         }
     };
 
+    formatMSG(serverMSG)
+    {
+        /**
+         * hier soll die Nachricht vom Server (JSON), mit Tags als "legend" in HTML dargestellt werden.
+         * die formatierte Nachricht soll als return wert zurueckgeliefert werden.
+         * */
+    }
+
     handleMessage(event)
     {
+        /**
+         * Wenn eine Nachricht eintrifft, soll diese in einer Variable gespeichert werden,
+         * an eine Funktion zum Formatieren geschickt werden und das Ergebnis als return Wert zurueckgeliefert werden.
+         */
+
         console.log("incomming message");
 
+        let plainMSG = event.data;
+
+        //return formatMSG(plainMSG);
         //es muss noch eine methode zur Formatierung der Nachricht implementiert werden
     }
 }
