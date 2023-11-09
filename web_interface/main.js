@@ -12,19 +12,26 @@ function main()
     const connect = new CreateConnection(URL, param);
 
 
-    if(inputCheck.checkPWD() && inputCheck.checkURL())
+    sForm.addEventListener('submit', function everything(e)
     {
-        connect.sendMessage();   //es wird die URL und parameter als argument uebergeben
-    }
+        /**
+         * Hier steht die komplette Programmlogik zum Ablauf.
+         */
+        
+        if(inputCheck.checkPWD() && inputCheck.checkURL())
+        {
+            connect.sendMessage();   //es werden die URL und parameter als argument uebergeben
+        }
 
-    else    //wenn die Bedingungen fuer das Formular nicht erfuellt sind.
-    {
-        Array.from(elements).forEach((element) => { //alle Eingabefelder werden der Klasse error zugeordnet und rot gefaerbt.
-        element.classList.add("error");
-        });
+        else    //wenn die Bedingungen fuer das Formular nicht erfuellt sind.
+        {
+            Array.from(elements).forEach((element) => { //alle Eingabefelder werden der Klasse error zugeordnet und rot gefaerbt.
+            element.classList.add("error");
+            });
 
-        return false;   //das Formular wird nicht abgeschickt.
-    }
+            return false;   //das Formular wird nicht abgeschickt.
+        }
+    });
 };
 
 function init(e)
