@@ -71,12 +71,10 @@ class CreateConnection
      * 
      * Diese Klasse stellt eine Verbindung zum python Web scraper her, dieser ist mit der Datenbank verbunden.
      */
-    constructor(msg1, msg2)
+    constructor()
     {
         this.url = document.getElementsByName('url')[0];
         this.socket = new WebSocket("ws://localhost:49153");
-        this.msg1 = msg1;
-        this.msg2 = msg2;
 
         //Methoden an Ereignisse binden
         this.socket.onmessage = this.handleMessage.bind(this);
@@ -94,7 +92,7 @@ class CreateConnection
         return true;    //return true damit nachdem die Verbindung geschlossen wurde, dass Programm komplett beendet wird.
     }
 
-    sendMessage()
+    sendMessage(msg1, msg2)
     {
         /**
          * Es wird in einem try-catch block versucht, zwei Nachrichten zu schicken.
@@ -111,7 +109,7 @@ class CreateConnection
         
         catch(error)
         {
-            console.log("Server unreachable", error);
+            console.log(error);
             this.closeConnection();
         }
     };
