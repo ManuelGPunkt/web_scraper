@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', init());
 
 function main()
 {
-    const sForm = document.getElementsByName('sForm')[0];
+    const sButton = document.getElementsByName('sButton')[0];
     const URL = document.getElementsByName('url')[0].value;
     const param = document.getElementsByName('param')[0].value;
 
@@ -12,7 +12,7 @@ function main()
     const connect = new CreateConnection();
 
 
-    sForm.addEventListener('submit', function everything(e)
+    sButton.addEventListener('click', function everything(e)
     {
         /**
          * Hier steht die komplette Programmlogik zum Ablauf.
