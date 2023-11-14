@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', init());
 function main()
 {
     const sForm = document.getElementsByName('sForm')[0];
-    const URL = document.getElementsByName('url')[0];
-    const param = document.getElementsByName('param')[0];
+    const URL = document.getElementsByName('url')[0].value;
+    const param = document.getElementsByName('param')[0].value;
 
     const inputCheck = new Behavior();
-    const connect = new CreateConnection(URL, param);
+    const connect = new CreateConnection();
 
 
     sForm.addEventListener('submit', function everything(e)
@@ -20,7 +20,7 @@ function main()
         
         if(inputCheck.checkPWD() && inputCheck.checkURL())
         {
-            connect.sendMessage();   //es werden die URL und parameter als argument uebergeben
+            connect.sendMessage(URL, param);   //es werden die URL und parameter als argument uebergeben
         }
 
         else    //wenn die Bedingungen fuer das Formular nicht erfuellt sind.
