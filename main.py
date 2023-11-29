@@ -1,11 +1,9 @@
-import scraping
+#import scraping
 import server
-from gui import JInputWindow as Jgui
 
-server.Connect("localhost", 49153)._server()
 
 class main():
-    pass
+    messenger = server("127.0.0.1", 49153)
 
 if __name__=="main":
     main()
