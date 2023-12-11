@@ -128,8 +128,8 @@ class CreateConnection
          * Wenn eine Nachricht eintrifft, soll diese in einer Variable gespeichert werden,
          * an eine Funktion zum Formatieren geschickt werden und das Ergebnis als return Wert zurueckgeliefert werden.
          */
-
-        console.log("incomming message");
+        
+        console.log("incomming message"+event.data);
 
         let plainMSG = event.data;
 
