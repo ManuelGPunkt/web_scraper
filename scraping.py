@@ -3,8 +3,9 @@ import csv
 import requests
 
 class Scraper:
-    def __init__(self, url:str) -> None:
+    def __init__(self, url:str, params:str) -> None:
         self.url:str = url
+        self.params = params
 
         response = requests.get(url)
         html = BeautifulSoup(response.text, 'html.parser')

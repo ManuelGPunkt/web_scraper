@@ -4,9 +4,9 @@ class DBconnect:
     dieses Modul soll die Schnittstelle zu einer relationalen Datenbank sein
     '''
     
-    def __init__(self, url : str, *parameters : str) -> None:
+    def __init__(self, url : str, params : str) -> None:
         self.url = url  #query soll die URL der Website sein
-        self.parameters = parameters  #queryResult sollen die Daten von der SQL-Abfrage sein
+        self.parameters = params  #queryResult sollen die Daten von der SQL-Abfrage sein
 
     def checkEntry(url) -> bool: #es soll ueberprueft werden, ob es fuer die URL bereits einen Eintrag gibt
         pass

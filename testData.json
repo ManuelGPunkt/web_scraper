@@ -1,0 +1,7 @@
+{
+	"welcome Message": "this works!",
+	"nested data": {
+		"first parameter": 1,
+		"second parameter": 2
+	}
+}
