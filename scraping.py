@@ -72,5 +72,5 @@ tag = html.find_all('a', class_="tag")
 
 #print(type(str(tag)))
 
-testit = Scraper(url, "a a p br span _")
+testit = Scraper(url, "a p a br span _")
 print(testit.format_to_XML())
