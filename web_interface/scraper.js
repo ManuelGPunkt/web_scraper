@@ -66,31 +66,17 @@ class CreateConnection
 {
     /**
      * 
-     * @param {*} msg1 
-     * @param {*} msg2 
+     * @param {*} param
      * 
      * Diese Klasse stellt eine Verbindung zum python Web scraper her, dieser ist mit der Datenbank verbunden.
      */
     constructor()
     {
         this.url = document.getElementsByName('url')[0];
-        this.socket = new WebSocket("ws://localhost:49153");
-
-        //Methoden an Ereignisse binden
-        this.socket.onmessage = this.handleMessage.bind(this);
+        this.tags = document.getElementsByName('param')[0];
+        this.serverAddr = '127.0.0.1:49153';
     }
 
-    closeConnection()
-    {
-        /**
-         *Diese Funktion dient lediglich um die Verbindung zu schliessen.
-         */
-
-        this.socket.close();
-        console.log("connection closed");
-        
-        return true;    //return true damit nachdem die Verbindung geschlossen wurde, dass Programm komplett beendet wird.
-    }
 
     sendMessage(msg1, msg2)
     {
@@ -101,39 +87,35 @@ class CreateConnection
          * Falls die uebertragung fehlschlaegt, soll die Verbindung abgebrochen werden.
          */
 
-        try
-        {
-            this.socket.send(msg1); //in msg1 soll die URL stehen
-            this.socket.send(msg2); //in msg2 sollen der Parameter string stehen. Wenn dieser leer ist, wird er vom scraper ignoriert (nicht verarbeitet)
-        }
+       const req = (msg1, msg2) => { //erstellen von der XML client request.
+        xmlRequest = "<content>\n\t<url>"+msg1+"</url>\n\t"
+                    +"<tags>"+msg2+"</tags>\n"
+                    +"</content>";
+        return xmlRequest;
+       }
         
-        catch(error)
+       fetch(
+        this.serverAddr,
         {
-            console.log(error);
-            this.closeConnection();
-        }
+            method:"POST",
+            headers:
+            {
+                "Content-Type" : "application/xml"
+            },
+            body:req
+        })
+        .then(Promise => {
+            console.log(Promise.text());
+        })
     };
 
     formatMSG(serverMSG)
     {
         /**
-         * hier soll die Nachricht vom Server (JSON), mit Tags als "legend" in HTML dargestellt werden.
+         * hier soll die Nachricht vom Server (XML), mit Tags als "legend" in HTML dargestellt werden.
          * die formatierte Nachricht soll als return wert zurueckgeliefert werden.
-         * */
-    }
-
-    handleMessage(event)
-    {
-        /**
-         * Wenn eine Nachricht eintrifft, soll diese in einer Variable gespeichert werden,
-         * an eine Funktion zum Formatieren geschickt werden und das Ergebnis als return Wert zurueckgeliefert werden.
+         * Die Nachricht soll so auf der Website dargestellt werden.
          */
-        
-        console.log("incomming message"+event.data);
-
-        let plainMSG = event.data;
-
-        //return formatMSG(plainMSG);
-        //es muss noch eine methode zur Formatierung der Nachricht implementiert werden
     }
+
 }
