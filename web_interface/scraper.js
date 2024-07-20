@@ -74,7 +74,7 @@ class CreateConnection
     {
         this.url = document.getElementsByName('url')[0];
         this.tags = document.getElementsByName('param')[0];
-        this.serverAddr = '127.0.0.1:49153';
+        this.serverAddr = '127.0.0.1:49154'; //port 49154, weil es innerhalb von einem docker container laeuft.
     }
 
 

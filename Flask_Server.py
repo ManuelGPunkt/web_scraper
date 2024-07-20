@@ -36,4 +36,4 @@ def get_data():
 
 #Server starten
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=49153, debug=True)
+    app.run(host='127.0.0.1', port=49154, debug=True)
