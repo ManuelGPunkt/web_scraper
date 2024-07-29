@@ -2,12 +2,17 @@ FROM ubuntu:14.04
 
 MAINTAINER Mark Becher
 
-WORKDIR /usr/local/apache2/htdocs/
+WORKDIR /var/www/html/
 
 RUN apt-get update && \
 apt-get install -y apache2 && \
 apt-get clean
 
-COPY ./web_interface/ /usr/local/apache2/htdocs/
+ENV APACHE_FRONT_END_DIR /var/www/html/
+ENV APACHE_LOG_DIR /var/log/apache2
 
-CMD ["bash", "-c", "ls -a && echo \nApache\ Server\ running..."]
+EXPOSE 80
+
+COPY ./web_interface/ $APACHE_FRONT_END_DIR
+
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

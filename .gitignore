@@ -1,3 +1,4 @@
 __pycache__
 /env
 startApache.sh
+apache_logs/*
