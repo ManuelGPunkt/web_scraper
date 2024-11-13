@@ -1,18 +1,11 @@
-FROM ubuntu:14.04
+FROM python:3.6.15
 
-MAINTAINER Mark Becher
+LABEL Mark Becher
 
-WORKDIR /var/www/html/
+WORKDIR /app
 
-RUN apt-get update && \
-apt-get install -y apache2 && \
-apt-get clean
+COPY . /app/
 
-ENV APACHE_FRONT_END_DIR /var/www/html/
-ENV APACHE_LOG_DIR /var/log/apache2
+RUN pip install flask requests lxml
 
-EXPOSE 80
-
-COPY ./web_interface/ $APACHE_FRONT_END_DIR
-
-ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+ENTRYPOINT [ "python", "Flask_Server.py" ]

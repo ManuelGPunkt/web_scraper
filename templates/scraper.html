@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script> <!-- Javascript Krypto Bibliothek -->
-    <link rel="stylesheet" href="scraper.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script> <!-- Javascript Krypto Bibliothek -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scraper.css') }}">
     <title>Web Scraper</title>
 </head>
 <body>
@@ -19,8 +19,8 @@
     <span></span><!-- Hier soll die formatierte Server Nachricht stehen -->
 
     <img>
-    <script src="scraper.js"> crossorigin="anonymous"</script>
-    <script src="main.js"> crossorigin="anonymous"</script>
+    <script src="{{ url_for('static', filename='javascript/scraper.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/main.js') }}"></script>
     </img>
 </body>
 </html>

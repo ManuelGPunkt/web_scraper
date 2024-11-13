@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web-scraper:
+    build: .
+    ports:
+      - "49154:80"
+
+  apache-server:
+    build: ./web_interface
+    volumes:
+      - ./apache_logs:/var/log/apache2
+    ports:
+      - "49155:80"

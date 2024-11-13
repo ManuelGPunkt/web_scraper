@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from lxml import etree
 
 def validate_client_data(xml : str, xsd : str) -> bool:
@@ -19,8 +19,9 @@ def validate_client_data(xml : str, xsd : str) -> bool:
 
 app = Flask(__name__)
 
-@app.route('/api/data', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def get_data():
+    '''
     data = request.json() #darf nicht in json format sein, muss geandert werden.
 
     #empfangene Daten validieren
@@ -33,7 +34,9 @@ def get_data():
 
     #der return wert ist die Antwort des Servers
     return jsonify(response_data)
+    '''
+    return render_template('scraper.html')
 
 #Server starten
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=49154, debug=True)
+    app.run(host='0.0.0.0', port=49154, debug=True)
