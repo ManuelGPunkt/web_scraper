@@ -10,7 +10,7 @@ class Behavior
         this.param = document.getElementsByName('param')[0];
     }
 
-    async checkPWD()
+    checkPWD()
     {
         /**
          *es soll ein passwort eingeben werden und anschliessend ueberprueft werden.
@@ -18,12 +18,12 @@ class Behavior
          */
 
         let PWD = this.pwd.value
-        
+
         const hashedPW = CryptoJS.SHA256(PWD).toString();
-        return hashedPW === "f395c41bd385de8883ffbe089efa60d9fa809ef626135a9dd848bf5b10d5b793"; // gibt true oder false zurueck. Das Passwort ist: 8h+H)=(+n-Y%DG78
+        return hashedPW == "14a27a69e10e646c6407a17df5c62a5a356fb9b3387e5ced1f07ca381b75dee2"; // gibt true oder false zurueck. Das Passwort ist: 8h+H)=(+n-Y%DG78
     }
 
-    async checkURL() //es wird die gueltigkeit der URL ueberprueft
+    checkURL() //es wird die gueltigkeit der URL ueberprueft
     {
         /**
          * Es wird ueberprueft ob der String ungueltige Zeichen enthaelt, wenn der Fall ist, wird false zurueckgegeben,
@@ -34,14 +34,14 @@ class Behavior
 
         if(URL == "" || (URL.includes("'") || URL.includes("\"")))
         {
-            alert("URL invalid!");
+            window.alert("URL invalid!");
             return false; //der gesammte Ablauf des Programms wird unterbrochen
         }
         
         return true;
     }
 
-    async checkParameters() //wenn die Parameter gueltig sind, werden sie als einziger string an den web scraper geschickt und dort zerteilt.
+    checkParameters() //wenn die Parameter gueltig sind, werden sie als einziger string an den web scraper geschickt und dort zerteilt.
     {
         /**
          * Es wird ueberprueft ob ungueltige Zeichen vorhanden sind, wenn ja wird false zurueckgeliefert.
@@ -74,7 +74,7 @@ class CreateConnection
     {
         this.url = document.getElementsByName('url')[0];
         this.tags = document.getElementsByName('param')[0];
-        this.serverAddr = '/'; //adresse, weil es innerhalb von einem docker container laeuft.
+        this.serverAddr = '/db'; //adresse, weil es innerhalb von einem docker container laeuft.
     }
 
 
@@ -100,13 +100,18 @@ class CreateConnection
             method:"POST",
             headers:
             {
-                "Content-Type" : "application/xml"
+                "Content-Type" : "application/json"
             },
             body:req
         })
-        .then(Promise => {
-            console.log(Promise.text());
+        .then(response => response.text()
+        )
+        .then(data => {
+            this.formatMSG(data);
+            console.log(data);
         })
+        .catch(error => console.error(error)
+        )
     };
 
     formatMSG(serverMSG)
@@ -116,6 +121,7 @@ class CreateConnection
          * die formatierte Nachricht soll als return wert zurueckgeliefert werden.
          * Die Nachricht soll so auf der Website dargestellt werden.
          */
+        document.getElementsByTagName('span')[0].innerHTML = serverMSG
     }
 
 }

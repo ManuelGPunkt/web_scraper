@@ -21,21 +21,12 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def get_data():
-    '''
-    data = request.json() #darf nicht in json format sein, muss geandert werden.
-
-    #empfangene Daten validieren
-    if not validate_client_data(data, 'clientData.xsd'):
-        return False
-
-    #Daten verarbeiten
-    response_data = {'message': 'received data', 'received_data': data}
-    print(jsonify(response_data))
-
-    #der return wert ist die Antwort des Servers
-    return jsonify(response_data)
-    '''
     return render_template('scraper.html')
+
+@app.route('/db', methods=['POST'])
+def return_value():
+    print("fetch request incoming")
+    return jsonify(message="it Works!")
 
 #Server starten
 if __name__ == '__main__':

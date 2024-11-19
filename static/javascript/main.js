@@ -7,6 +7,7 @@ function main()
     const sButton = document.getElementsByName('sButton')[0];
     const URL = document.getElementsByName('url')[0].value;
     const param = document.getElementsByName('param')[0].value;
+    const elements = document.getElementsByTagName('input');
 
     const inputCheck = new Behavior();
     const connect = new CreateConnection();
@@ -29,6 +30,7 @@ function main()
             element.classList.add("error");
             });
 
+            console.log("ein fehler ist aufgetreten!");
             return false;   //das Formular wird nicht abgeschickt.
         }
     });
