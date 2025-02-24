@@ -2,6 +2,7 @@
 
 from flask import Flask, request, jsonify, render_template
 from lxml import etree
+from scraping import Scraper
 
 def validate_client_data(xml : str, xsd : str) -> bool:
     """
@@ -21,12 +22,22 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def get_data():
+    '''
+    rendert das Template (die Website) und gibt sie zurueck.
+    '''
+
     return render_template('scraper.html')
 
 @app.route('/db', methods=['POST'])
 def return_value():
-    print("fetch request incoming")
-    return jsonify(message="it Works!")
+    '''
+    soll die Anfrage verarbeiten und eine fertiggestellte Antwort zurueckliefern.
+    '''
+
+    print(f"fetch request incoming: {request.json}")
+    req = request.json
+    scrape = Scraper(req["url"], req["parameter"])
+    return jsonify(scrape.selectTags())
 
 #Server starten
 if __name__ == '__main__':

@@ -87,12 +87,7 @@ class CreateConnection
          * Falls die uebertragung fehlschlaegt, soll die Verbindung abgebrochen werden.
          */
 
-       const req = (msg1, msg2) => { //erstellen von der XML client request.
-        xmlRequest = "<content>\n\t<url>"+msg1+"</url>\n\t"
-                    +"<tags>"+msg2+"</tags>\n"
-                    +"</content>";
-        return xmlRequest;
-       }
+       const req = {"url":msg1, "parameter":msg2}; //erstellen von der JSON client request.
         
        fetch(
         this.serverAddr,
@@ -102,7 +97,7 @@ class CreateConnection
             {
                 "Content-Type" : "application/json"
             },
-            body:req
+            body:JSON.stringify(req)
         })
         .then(response => response.text()
         )
