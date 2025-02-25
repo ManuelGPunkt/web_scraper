@@ -9,8 +9,8 @@ class Scraper:
         self.tags_filtered = [] #hier werden die Tags ohne wiederholung gespeichert.
         self.contentString = "" #hier wird der komplette Inhalt in einem String zwischengespeichert.
 
-        response = requests.get(url)
-        html = BeautifulSoup(response.text, 'html.parser')
+        self.response = requests.get(url)
+        self.html = BeautifulSoup(self.response.text, 'html.parser')
 
     #private Methode
     def __stripTags(self) -> None:
@@ -33,7 +33,7 @@ class Scraper:
         self.__stripTags()
     
         for tags in self.tags_filtered:
-            placeHolder = html.find_all(f"{tags}", class_='')
+            placeHolder = self.html.find_all(f"{tags}", class_='')
             for w in placeHolder:
                 self.contentString += str(w) + "\n"
 
@@ -52,6 +52,9 @@ class Scraper:
         
 
 #-----------------------------------------------------------------------------------------------------
+
+'''
+Dieser Teil ist nur zu Testzwecken ob der Scraper funktioniert.
 
 # url setzen
 url = "https://quotes.toscrape.com/"
@@ -74,3 +77,4 @@ tag = html.find_all('a', class_="tag")
 
 testit = Scraper(url, "a p a br span _")
 print(testit.format_to_XML())
+'''
